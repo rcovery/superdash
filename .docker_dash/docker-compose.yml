@@ -1,0 +1,29 @@
+version: "3.5"
+services:
+  app:
+    build: .
+    environment:
+      - TERM=xterm
+    ports:
+      - "9000:80"
+    container_name: "sdash"
+    volumes:
+      - ..:/home/superdash
+    entrypoint: "tail -f /dev/null"
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: dashadm@email.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    ports:
+      - "9001:80"
+    container_name: "pgadmin"
+  db:
+    image: postgres
+    environment:
+      POSTGRES_DB: superdash
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+    ports:
+      - "9002:5432"
+    container_name: "sdashdb"

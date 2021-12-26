@@ -1,0 +1,29 @@
+import { Server } from 'socket.io';
+
+async function handler(req, res) {
+    if (!res?.socket?.server?.io) {
+        console.log("Creating SocketIO Server...");
+        const io = new Server(res.socket.server, {
+            path: "/api/socketio"
+        });
+
+        /* io.on('connection', (socket) => {
+            console.log("New client connected! :: " + socket.id);
+
+            socket.on('hello', () => {
+                socket.emit('hello-back', socket.id)
+                console.log('Hello Socket');
+            })
+
+            socket.on('disconnect', () => {
+                console.log("Client disconnected!");
+            })
+        }); */
+
+        res.socket.server.io = io;
+    }
+
+    res.end();
+};
+
+export default handler;
